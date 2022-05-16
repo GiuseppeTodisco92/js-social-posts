@@ -1,43 +1,12 @@
 /*---------------
     FUNCTION
  ----------------*/
+// Milestone 1 - Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
+ 
+ 
 
- function createPost (element){
-    const card = `
-    <div class="post">
-    <div class="post__header">
-        <div class="post-meta">                    
-            <div class="post-meta__icon">
-                <img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">                    
-            </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">${element.author.name}</div>
-                <div class="post-meta__time">${element.created}</div>
-            </div>                    
-        </div>
-    </div>
-    <div class="post__text">"${element.content}"</div>
-    <div class="post__image">
-        <img src="${element.media}" alt="">
-    </div>
-    <div class="post__footer">
-        <div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
-            </div>
-        </div> 
-    </div>            
-</div>
-    `
-    return card;
+    
 
- }
 
 
 const posts = [
@@ -98,14 +67,20 @@ const posts = [
     }
 ];
 
-const postContainer = document.querySelector(".posts-list");
+const postList = document.querySelector(".posts-list");
 
-for(i=0 ; i < posts.length ; i++){
+
+
+for (i=0 ; i < posts.length ; i++){
     const element = posts[i];
-    console.log(element);
-    const card = createPost(element);
-    
-    postContainer.innerHTML += card;
+    const post = document.querySelector("#tpl-post").content.cloneNode(true);
+    post.querySelector(".post-meta__author").innerHTML = element.author.name;
+    post.querySelector(".profile-pic").src = element.author.image;
+    post.querySelector(".post-meta__time").innerHTML = element.created;
+    post.querySelector(".post__text").innerHTML = element.content;
+    post.querySelector(".post__image img").src = element.media;
+    post.querySelector(".js-likes-counter").innerHTML = element.likes;
+    postList.append(post);
 }
 
 
@@ -113,12 +88,6 @@ for(i=0 ; i < posts.length ; i++){
 
 
 
-// Ciao ragazzi,
-// esercizio di oggi: Social Posts
-// nome repo: js-social-posts
-// Descrizione
-// Ricreiamo un feed social aggiungendo al layout di base fornito, il nostro script JS in cui:
-// Milestone 1 - Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
 // Milestone 2 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
 // Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 // BONUS
