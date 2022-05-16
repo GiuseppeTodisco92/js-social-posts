@@ -3,8 +3,6 @@
  ----------------*/
 // Milestone 1 - Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
  
- 
-
     
 
 
@@ -68,20 +66,37 @@ const posts = [
 ];
 
 const postList = document.querySelector(".posts-list");
+let post = document.querySelector("#tpl-post").content.cloneNode(true);
 
 
 
 for (i=0 ; i < posts.length ; i++){
     const element = posts[i];
-    const post = document.querySelector("#tpl-post").content.cloneNode(true);
+    post = document.querySelector("#tpl-post").content.cloneNode(true);
     post.querySelector(".post-meta__author").innerHTML = element.author.name;
     post.querySelector(".profile-pic").src = element.author.image;
     post.querySelector(".post-meta__time").innerHTML = element.created;
     post.querySelector(".post__text").innerHTML = element.content;
     post.querySelector(".post__image img").src = element.media;
     post.querySelector(".js-likes-counter").innerHTML = element.likes;
+    const btnLike = post.querySelector(".like-button");
+    let like = post.querySelector(".js-likes-counter");
+    btnLike.setAttribute("data-postid", element.id);
+    btnLike.addEventListener("click",
+        function(){
+            if(btnLike.classList.contains("like-button--liked")){
+                btnLike.classList.remove("like-button--liked");
+                like.innerHTML = -- element.likes;  
+            } else {
+                btnLike.classList.add("like-button--liked");  
+                 like.innerHTML = ++ element.likes;  
+            }
+            console.log(this);
+        }
+    )
     postList.append(post);
 }
+
 
 
 
