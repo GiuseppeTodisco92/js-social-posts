@@ -73,9 +73,15 @@ let post = document.querySelector("#tpl-post").content.cloneNode(true);
 for (i=0 ; i < posts.length ; i++){
     const element = posts[i];
     post = document.querySelector("#tpl-post").content.cloneNode(true);
+    if(element.author.image !== null){
+        //inserire le iniziali 
+        post.querySelector(".profile-pic").src = element.author.image;
+    }else {
+        
+    }
     post.querySelector(".post-meta__author").innerHTML = element.author.name;
-    post.querySelector(".profile-pic").src = element.author.image;
-    post.querySelector(".post-meta__time").innerHTML = element.created;
+    
+    post.querySelector(".post-meta__time").innerHTML = italianDate(element.created);
     post.querySelector(".post__text").innerHTML = element.content;
     post.querySelector(".post__image img").src = element.media;
     post.querySelector(".js-likes-counter").innerHTML = element.likes;
@@ -97,8 +103,22 @@ for (i=0 ; i < posts.length ; i++){
     postList.append(post);
 }
 
+//funzione per invertire la data 
+function italianDate (date){
+    return date.split("-").reverse().join("/");
+}
 
 
+function getInitials(name){
+    const nameArray = name.split(" ");
+    let i = 0;
+    let initials = "";
+    while(i < nameArray.length && i < 2){
+        initials += nameArray [i][0];
+        i++;
+    }
+    return initials ; 
+}
 
 
 
